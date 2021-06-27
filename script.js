@@ -51,11 +51,33 @@ function apiCall(event){
         // humidity 
         console.log('Humidity: ', data.main.humidity); 
         // TODO: get the latitude and longitude for uv index 
+        // Latitude 
+        console.log('Latitude: ', data.coord.lat); 
+        latitude = data.coord.lat; 
+        console.log('Latitude Saved : ', latitude);
+        // Longitude 
+        console.log('Longitude: ', data.coord.lon); 
+        longitude = data.coord.lon; 
+        console.log('Longitude Saved : ' ,longitude); 
+        uviForcasts(latitude, longitude); 
         });
 
 }
 
+// uv index and forcasts within the last 5 days 
+function uviForcasts(lat, lon, apid){
 // https://openweathermap.org/api/one-call-api
-
-
+    var queryURL ='https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly,daily&appid=' + APIKEY; 
+    console.log('uvi link: ',queryURL); 
+     fetch(queryURL)
+     .then(function (response) {
+        var accessCityData = response.json; 
+        return response.json();
+        })
+        .then(function (data) {
+            console.log('Data: ', data);
+            console.log('uvi: ', data.current.uvi); 
+        }); 
+}
+  
 
