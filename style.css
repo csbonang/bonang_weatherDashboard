@@ -72,6 +72,9 @@ header{
 {
     display: flex;
     flex-direction: row;
+    padding: 1rem; 
+    margin-right: 1rem; 
+    margin-left: 2rem;
 }
 #button-holder
 {

@@ -82,7 +82,6 @@ function apiCall(event){
         var uvi_info = uviForcasts(latitude, longitude); 
         console.log('uvi info: ', uvi_info); 
         var weatherIcon = data.weather.icon;
-        //  
         console.log('weather icon: ', weatherIcon); 
         // TODO: display the city information 
         displayCurrentCityInfo(); 
@@ -132,6 +131,7 @@ function displayFiveDay(lat, lon, apid)
             for(var i = 1; i <= 5; i++)
             {
                createCard(data.daily[i]); 
+               
             }
 
 
@@ -143,20 +143,38 @@ function displayFiveDay(lat, lon, apid)
 
 function createCard(data) 
 {
-   // create element 
+    
    // card container 
    var card = document.createElement('div'); 
+
+   // include weather icon 
+   var card_Img = document.createElement('img'); 
+   card_Img.setAttribute('src', 'https://openweathermap.org/img/w/' + data.weather[0].icon + '.png'); 
+   card.appendChild(card_Img); 
+
+   // temp element 
    var card_temp= document.createElement('p'); 
-   // TODO: repeat for wind speed, ... date
-   card_temp.textContent = "temp: " + data.temp.day; 
+   // wind element 
+   var card_wind= document.createElement('p'); 
+   // humidity 
+   var card_humidity= document.createElement('p'); 
+   // temp
+   card_temp.textContent = "Temp: " + data.temp.day; 
    card.appendChild(card_temp); 
+   // wind 
+   card_wind.textContent = "Wind: " + data.wind_speed + "MPH"; 
+   card.appendChild(card_wind); 
+   // humidity 
+   card_humidity.textContent = "Humidity: " + data.humidity; 
+   card.appendChild(card_humidity); 
 
+   // style the card 
+   card.style.padding = "1vw"; 
+   card.style.margin = "1vw"; 
+   card.style.backgroundColor = "#AA0000";
+   // TODO: include width 
 
-
-
-
-
-   // TODO: leave at end 
+   // leave at end 
    document.querySelector('.card').appendChild(card); 
 }
 
