@@ -8,7 +8,7 @@
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color:gray; /* Black*/
+    background-color: rgb(220, 220, 228); /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -51,10 +51,15 @@
     .sidenav a {font-size: 18px;}
   }
 
+  
 header{
-    background-color: #F1F1F1;
+    /* background-color: #F1F1F1; */
     text-align: center;
     padding: 20px;
+    background-color:blue; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right,rgb(109, 155, 241),blue , rgb(6, 6, 105));
+    color: white;
+    font-size: x-large;
 }
 
 #grid-wrap
@@ -75,9 +80,47 @@ header{
     padding: 1rem; 
     margin-right: 1rem; 
     margin-left: 2rem;
+    border-radius: 25px;
 }
 #button-holder
 {
     display: flex;
     flex-direction: column; 
 }
+/* has a border around current information about city  */
+#city-info
+{
+    display: none; 
+    border-radius: 25px;
+    border: 0.2vw solid black;
+    margin-left: 2vw;
+    margin-top: 2vw;
+    
+}
+/* correcting size of current uv number highlight  */
+#city-uv-num
+{
+    border-radius: 25px;
+    width: 6vw; 
+}
+
+#cityName
+{
+    border-radius: 1vw;
+    margin-bottom: 2vw;
+    margin-left: 1vw;
+}
+/* center the search header label  */
+#searchLabel 
+{
+    margin-left: 5vw;
+}
+#submitButton
+{
+    border-radius: 1vw;
+    margin-left: 7vw;
+    width: 10vw; 
+    margin-bottom: 2vw;
+    background-color: rgb(45, 45, 197)
+}
+

@@ -19,6 +19,8 @@ var displayWind = document.getElementById('city-wind');
 var displayHumidity = document.getElementById('city-humidity'); 
 var displayUV = document.getElementById('city-uv'); 
 var displayUVNum = document.getElementById('city-uv-num'); 
+// city selected on button click 
+var selectedCity; 
 // var queryURL; 
 
 // user input for just the city name 
@@ -42,7 +44,7 @@ var displayUVNum = document.getElementById('city-uv-num');
    // fetch: Web API built in browser that allows you to make server-side API 
    // calls without having to use AJAX and install a bulky library like jQuery
 // TODO: SAVE JUST THE CITY NAMES.  
-var city; 
+ 
 init(); 
 function init()
 {
@@ -52,7 +54,7 @@ function init()
 function apiCall(event){
     // ensures it stays 
    event.preventDefault();
-   city = document.querySelector('#cityName').value.trim();  
+   var city = document.querySelector('#cityName').value.trim();  
    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
    console.log('city: ' + city); 
     // store the city name into local storage
@@ -121,6 +123,8 @@ function uviForcasts(lat, lon, apid){
 // display the information about the city selected or newly searched 
 function displayCurrentCityInfo(data, lat, lon, apid)
 {
+    // display the current city info 
+    displayCityInfo.style.display = "block"; 
     // display the temp, wind, Humidity
     displayTemp.textContent = 'Temp: ' + data.main.temp; 
     displayWind.textContent = 'Wind: ' + data.wind.speed + " MPH"; 
@@ -219,9 +223,7 @@ function createCard(data)
    // style the card 
    card.style.padding = "1vw"; 
    card.style.margin = "1vw"; 
-   card.style.backgroundColor = "#AA0000";
-   // TODO: include width 
-
+   card.style.backgroundColor = "#0B5BE6";
    // leave at end 
    document.querySelector('.card').appendChild(card); 
 }
@@ -241,22 +243,24 @@ function createButtons()
     for(var i = 0; i < storedCityNames.length; i++){
         var city_button= document.createElement('button'); 
         city_button.textContent = storedCityNames[i].cityName;
-        console.log('city Name: ' + storedCityNames[i].cityName); 
-        // city_button.setAttribute('index', i); 
+        // TODO: style the buttons to be rounded and spaced out 
+       // console.log('city Name: ' + storedCityNames[i].cityName); 
+        city_button.setAttribute('data-index', storedCityNames[i].cityName); 
         // update city name with the city name button that user just clicked on 
-        city = storedCityNames[i].cityName;
+        selectedCity = storedCityNames[i].cityName;
+        // selectedCity = city_button.getAttribute(data-index[i]); 
+        console.log('Selected city: ', selectedCity); 
         city_button.addEventListener("click", buttonClicked); 
         displayButtons.appendChild(city_button); 
-        // if the button is click, then display the information associate with it 
+        // if the button is click, then display the information associated with it 
         
     }
-   
-
-    
 }
 function buttonClicked(event)
 {
-    console.log('city Name on click: ', city); 
+    console.log('city Name on click: ', selectedCity); 
+    
+
 }
 
 
