@@ -14,6 +14,9 @@ var curr_icon = document.getElementById('weather_icon');
 // able to access weather description 
 var curr_description = document.getElementById('card-text'); 
 var displayButtons = document.getElementById('button-holder'); 
+var displayTemp = document.getElementById('city-temp'); 
+var displayWind = document.getElementById('city-wind'); 
+var displayHumidity = document.getElementById('city-humidity'); 
 // var queryURL; 
 
 // user input for just the city name 
@@ -42,7 +45,7 @@ init();
 function apiCall(event){
     // ensures it stays 
    event.preventDefault();
-   var city = document.querySelector('#cityName').value;  
+   var city = document.querySelector('#cityName').value.trim();  
    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
    console.log('city: ' + city); 
     // store the city name into local storage
@@ -83,10 +86,10 @@ function apiCall(event){
         console.log('uvi info: ', uvi_info); 
         var weatherIcon = data.weather.icon;
         console.log('weather icon: ', weatherIcon); 
-        // TODO: display the city information 
-        displayCurrentCityInfo(); 
         // TODO: 5 day display  + icons 
         displayFiveDay(latitude, longitude, APIKEY); 
+        // TODO: display the city information 
+        displayCurrentCityInfo(data); 
         });
 
 }
@@ -110,11 +113,13 @@ function uviForcasts(lat, lon, apid){
 }
 
 // display the information about the city selected or newly searched 
-function displayCurrentCityInfo()
+function displayCurrentCityInfo(data)
 {
-    displayCityInfo.textContent = 'Hello'; 
-
-
+    displayTemp.textContent = 'Temp: ' + data.main.temp; 
+    displayWind.textContent = 'Wind: ' + data.wind.speed + " MPH"; 
+    displayHumidity.textContent = 'Humidity: ' + data.main.humidity; 
+    // TODO: uvi forcasts 
+    
 }
 function displayFiveDay(lat, lon, apid)
 {
@@ -126,17 +131,13 @@ function displayFiveDay(lat, lon, apid)
        return response.json();
        })
        .then(function (data) {
-           console.log('Data: ', data);
+            console.log('Data: ', data);
             //5-day: information     
             for(var i = 1; i <= 5; i++)
             {
                createCard(data.daily[i]); 
                
-            }
-
-
-
-    
+            }    
        }); 
 }
 
@@ -162,7 +163,7 @@ function createCard(data)
    card_temp.textContent = "Temp: " + data.temp.day; 
    card.appendChild(card_temp); 
    // wind 
-   card_wind.textContent = "Wind: " + data.wind_speed + "MPH"; 
+   card_wind.textContent = "Wind: " + data.wind_speed + " MPH"; 
    card.appendChild(card_wind); 
    // humidity 
    card_humidity.textContent = "Humidity: " + data.humidity; 
