@@ -17,6 +17,8 @@ var displayButtons = document.getElementById('button-holder');
 var displayTemp = document.getElementById('city-temp'); 
 var displayWind = document.getElementById('city-wind'); 
 var displayHumidity = document.getElementById('city-humidity'); 
+var displayUV = document.getElementById('city-uv'); 
+var displayUVNum = document.getElementById('city-uv-num'); 
 // var queryURL; 
 
 // user input for just the city name 
@@ -42,6 +44,11 @@ var displayHumidity = document.getElementById('city-humidity');
 // TODO: SAVE JUST THE CITY NAMES.  
 
 init(); 
+function init()
+{
+    console.log('calling init'); 
+    createButtons(); 
+}
 function apiCall(event){
     // ensures it stays 
    event.preventDefault();
@@ -81,15 +88,14 @@ function apiCall(event){
         console.log('Longitude: ', data.coord.lon); 
         longitude = data.coord.lon; 
         console.log('Longitude Saved : ' ,longitude); 
-        // get the uvi information 
-        var uvi_info = uviForcasts(latitude, longitude); 
-        console.log('uvi info: ', uvi_info); 
+        
+        // console.log('uvi info: ', uvi_info); 
         var weatherIcon = data.weather.icon;
         console.log('weather icon: ', weatherIcon); 
         // TODO: 5 day display  + icons 
         displayFiveDay(latitude, longitude, APIKEY); 
         // TODO: display the city information 
-        displayCurrentCityInfo(data); 
+        displayCurrentCityInfo(data,latitude, longitude, APIKEY); 
         });
 
 }
@@ -113,12 +119,53 @@ function uviForcasts(lat, lon, apid){
 }
 
 // display the information about the city selected or newly searched 
-function displayCurrentCityInfo(data)
+function displayCurrentCityInfo(data, lat, lon, apid)
 {
+    // display the temp, wind, Humidity
     displayTemp.textContent = 'Temp: ' + data.main.temp; 
     displayWind.textContent = 'Wind: ' + data.wind.speed + " MPH"; 
     displayHumidity.textContent = 'Humidity: ' + data.main.humidity; 
-    // TODO: uvi forcasts 
+    // UV index 
+    var queryURL ='https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly&units=imperial&appid=' + APIKEY; 
+    console.log('uvi link: ',queryURL); 
+     fetch(queryURL)
+     .then(function (response) {
+        var accessCityData = response.json; 
+        return response.json();
+        })
+        .then(function (data) {
+            console.log('Data: ', data);
+            var uvi = data.current.uvi; 
+            displayUV.textContent = 'UV Index: '; 
+            displayUVNum.textContent = uvi; 
+            // display different colors depending on the uv value 
+            console.log("displaying colors"); 
+            switch(true)
+            {
+                case (uvi <= 2): 
+                    // low 
+                    displayUVNum.style.backgroundColor = 'green'; 
+                    console.log('display green'); 
+                    break; 
+                case (uvi <= 5): 
+                    // moderate
+                    displayUVNum.style.backgroundColor = 'yellow'; 
+                    break; 
+                case (uvi <= 7):
+                    // high 
+                    displayUVNum.style.backgroundColor = 'orange'; 
+                    break; 
+                case (uvi <= 10): 
+                    // very high 
+                    displayUVNum.style.backgroundColor = 'red'; 
+                    break;  
+                default:   
+                    // extreme 
+                    displayUVNum.style.backgroundColor = 'purple'; 
+            }
+            
+        }); 
+
     
 }
 function displayFiveDay(lat, lon, apid)
@@ -199,11 +246,7 @@ function createButtons()
     }
     
 }
-function init()
-{
-    console.log('calling init'); 
-    createButtons(); 
-}
+
 
 
 
