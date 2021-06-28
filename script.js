@@ -6,6 +6,14 @@
 var APIKEY = "6f729042d0e904833f377ed98e9382de"; 
 var latitude; 
 var longitude; 
+var displayCityInfo = document.getElementById('city-info'); 
+// able to access weather date for 5-day 
+var curr_date = document.getElementById('card-title'); 
+// able to access weather icon
+var curr_icon = document.getElementById('weather_icon'); 
+// able to access weather description 
+var curr_description = document.getElementById('card-text'); 
+var displayButtons = document.getElementById('button-holder'); 
 // var queryURL; 
 
 // user input for just the city name 
@@ -29,12 +37,23 @@ var longitude;
    // fetch: Web API built in browser that allows you to make server-side API 
    // calls without having to use AJAX and install a bulky library like jQuery
 // TODO: SAVE JUST THE CITY NAMES.  
+
+init(); 
 function apiCall(event){
     // ensures it stays 
    event.preventDefault();
    var city = document.querySelector('#cityName').value;  
-   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKEY;
+   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
    console.log('city: ' + city); 
+    // store the city name into local storage
+    var store_cities = JSON.parse(localStorage.getItem('store-cities')) || []; 
+    store_cities.push({
+        cityName: city
+    }); 
+    console.log("Stored City Name: ", store_cities); 
+    localStorage.setItem('store-cities', JSON.stringify(store_cities));
+
+   // print the query url to ensure that it is correct 
    console.log(queryURL); 
    // execute the fetch --> call API  
     fetch(queryURL) 
@@ -59,7 +78,16 @@ function apiCall(event){
         console.log('Longitude: ', data.coord.lon); 
         longitude = data.coord.lon; 
         console.log('Longitude Saved : ' ,longitude); 
-        uviForcasts(latitude, longitude); 
+        // get the uvi information 
+        var uvi_info = uviForcasts(latitude, longitude); 
+        console.log('uvi info: ', uvi_info); 
+        var weatherIcon = data.weather.icon;
+        //  
+        console.log('weather icon: ', weatherIcon); 
+        // TODO: display the city information 
+        displayCurrentCityInfo(); 
+        // TODO: 5 day display  + icons 
+        displayFiveDay(latitude, longitude, APIKEY); 
         });
 
 }
@@ -67,7 +95,7 @@ function apiCall(event){
 // uv index and forcasts within the last 5 days 
 function uviForcasts(lat, lon, apid){
 // https://openweathermap.org/api/one-call-api
-    var queryURL ='https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly,daily&appid=' + APIKEY; 
+    var queryURL ='https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly&units=imperial&appid=' + APIKEY; 
     console.log('uvi link: ',queryURL); 
      fetch(queryURL)
      .then(function (response) {
@@ -76,8 +104,90 @@ function uviForcasts(lat, lon, apid){
         })
         .then(function (data) {
             console.log('Data: ', data);
+            var uvi = data.current.uvi; 
             console.log('uvi: ', data.current.uvi); 
+            return uvi; 
         }); 
 }
+
+// display the information about the city selected or newly searched 
+function displayCurrentCityInfo()
+{
+    displayCityInfo.textContent = 'Hello'; 
+
+
+}
+function displayFiveDay(lat, lon, apid)
+{
+    var queryURL ='https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly&units=imperial&appid=' + APIKEY;
+    console.log('icon/five day link: ',queryURL); 
+    fetch(queryURL)
+    .then(function (response) {
+       var accessCityData = response.json; 
+       return response.json();
+       })
+       .then(function (data) {
+           console.log('Data: ', data);
+            //5-day: information     
+            for(var i = 1; i <= 5; i++)
+            {
+               createCard(data.daily[i]); 
+            }
+
+
+
+    
+       }); 
+}
+
+
+function createCard(data) 
+{
+   // create element 
+   // card container 
+   var card = document.createElement('div'); 
+   var card_temp= document.createElement('p'); 
+   // TODO: repeat for wind speed, ... date
+   card_temp.textContent = "temp: " + data.temp.day; 
+   card.appendChild(card_temp); 
+
+
+
+
+
+
+   // TODO: leave at end 
+   document.querySelector('.card').appendChild(card); 
+}
+
+function createButtons()
+{
+    var storedCityNames = JSON.parse(localStorage.getItem('store-cities')); 
+    // TODO: try-catch block 
+    if(!storedCityNames){
+        // if there is no city name then exit the function 
+        return; 
+
+    }
+    // loop through local storage 
+    // assign each city name to the button 
+    for(var i = 0; i < storedCityNames.length; i++){
+        var city_button= document.createElement('button'); 
+        city_button.textContent = storedCityNames[i].cityName;
+        console.log('city Name: ' + storedCityNames[i]); 
+        displayButtons.appendChild(city_button); 
+        
+    }
+    
+}
+function init()
+{
+    console.log('calling init'); 
+    createButtons(); 
+}
+
+
+
+
   
 
