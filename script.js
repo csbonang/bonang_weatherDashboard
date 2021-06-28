@@ -78,7 +78,8 @@ function getAPIData(city) {
     // print the query url to ensure that it is correct 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
     console.log('city: ' + city);
-    document.getElementById('cityHead').textContent = city;
+    // display city name and current date 
+    document.getElementById('cityHead').textContent = city + " (" + moment().format('l') + " )"; 
     console.log(queryURL);
 
     // execute the fetch --> call API  
@@ -200,19 +201,20 @@ function displayFiveDay(lat, lon, apid) {
             console.log('Data: ', data);
             //5-day: information     
             for (var i = 1; i <= 5; i++) {
-                createCard(data.daily[i]);
+                createCard(data.daily[i], i);
 
             }
         });
 }
 
 
-function createCard(data) {
+function createCard(data, i) {
 
     // card container 
     var card = document.createElement('div');
     var cardHeader = document.createElement('div'); 
-    cardHeader.textContent =  moment().format('dddd, MMMM Do',data.dt); 
+    // current day is updated for cards 
+    cardHeader.textContent = moment().add(i, "days").format("l")
     console.log('current data: ', data); 
     card.appendChild(cardHeader);
 
