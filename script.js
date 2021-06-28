@@ -67,17 +67,20 @@ function apiCall(event) {
 
     console.log("Stored City Name: ", store_cities);
     localStorage.setItem('store-cities', JSON.stringify(store_cities));
-    getAPIData(city)
-    // TODO: 
+    getAPIData(city) 
     createButtons();
 
 }
 function getAPIData(city) {
+    // ensures that cards display doesn't overloop 
+    document.querySelector(".card").innerHTML = "";
+
     // print the query url to ensure that it is correct 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
     console.log('city: ' + city);
     document.getElementById('cityHead').textContent = city;
     console.log(queryURL);
+
     // execute the fetch --> call API  
     fetch(queryURL)
         .then(function (response) {
@@ -208,6 +211,10 @@ function createCard(data) {
 
     // card container 
     var card = document.createElement('div');
+    var cardHeader = document.createElement('div'); 
+    cardHeader.textContent =  moment().format('dddd, MMMM Do',data.dt); 
+    console.log('current data: ', data); 
+    card.appendChild(cardHeader);
 
     // include weather icon 
     var card_Img = document.createElement('img');
