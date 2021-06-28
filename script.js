@@ -42,7 +42,7 @@ var displayUVNum = document.getElementById('city-uv-num');
    // fetch: Web API built in browser that allows you to make server-side API 
    // calls without having to use AJAX and install a bulky library like jQuery
 // TODO: SAVE JUST THE CITY NAMES.  
-
+var city; 
 init(); 
 function init()
 {
@@ -52,8 +52,8 @@ function init()
 function apiCall(event){
     // ensures it stays 
    event.preventDefault();
-   var city = document.querySelector('#cityName').value.trim();  
-   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
+   city = document.querySelector('#cityName').value.trim();  
+   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIKEY;
    console.log('city: ' + city); 
     // store the city name into local storage
     var store_cities = JSON.parse(localStorage.getItem('store-cities')) || []; 
@@ -226,6 +226,7 @@ function createCard(data)
    document.querySelector('.card').appendChild(card); 
 }
 
+// displays all the cities and their buttons 
 function createButtons()
 {
     var storedCityNames = JSON.parse(localStorage.getItem('store-cities')); 
@@ -240,12 +241,24 @@ function createButtons()
     for(var i = 0; i < storedCityNames.length; i++){
         var city_button= document.createElement('button'); 
         city_button.textContent = storedCityNames[i].cityName;
-        console.log('city Name: ' + storedCityNames[i]); 
+        console.log('city Name: ' + storedCityNames[i].cityName); 
+        // city_button.setAttribute('index', i); 
+        // update city name with the city name button that user just clicked on 
+        city = storedCityNames[i].cityName;
+        city_button.addEventListener("click", buttonClicked); 
         displayButtons.appendChild(city_button); 
+        // if the button is click, then display the information associate with it 
         
     }
+   
+
     
 }
+function buttonClicked(event)
+{
+    console.log('city Name on click: ', city); 
+}
+
 
 
 
