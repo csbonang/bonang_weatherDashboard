@@ -1,10 +1,30 @@
 # bonang_weatherDashboard
+Programmer: Clarisse Bonang 
+Deployed URL: https://csbonang.github.io/bonang_weatherDashboard/
 
-Side nav-bar 
-https://www.w3schools.com/howto/howto_js_sidenav.asp
-API call for cities & weather data 
-https://openweathermap.org/current#name
-API call for uv index: 
-https://openweathermap.org/api/one-call-api
-UV index scale 
-https://19january2017snapshot.epa.gov/sunsafety/uv-index-scale-1_.html
+# Description 
+Weather Dashboard allows the user to search a city name, view the current <br>  
+weather conditions, and the future weather conditions in the next 5 days. <br> 
+The information displays the city name, the date, an icon representation <br> 
+of weather conditions, the temperature, the humidity, the wind speed, and the UV index. <br> 
+
+# Requirements 
+1. When I search for a city, then I am presented with current and future conditions for that city and that city is added to the search history
+2. When I view current weather conditions for that city, then I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+3. When I view the UV index, then I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+4. When I view future weather conditions for that city, then I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+5. When I click on a city in the search history, then I am again presented with current and future conditions for that city
+# Screenshots 
+
+
+# References
+Side nav-bar <br> 
+https://www.w3schools.com/howto/howto_js_sidenav.asp<br> 
+API call for cities & weather data <br> 
+https://openweathermap.org/current#name<br> 
+API call for uv index: <br> 
+https://openweathermap.org/api/one-call-api<br> 
+UV index scale <br> 
+https://19january2017snapshot.epa.gov/sunsafety/uv-index-scale-1_.html<br> 
+
+
