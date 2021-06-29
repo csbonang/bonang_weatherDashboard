@@ -1,11 +1,11 @@
 # bonang_weatherDashboard
-Programmer: Clarisse Bonang 
+<b>Programmer: Clarisse Bonang </b>
 Deployed URL: https://csbonang.github.io/bonang_weatherDashboard/
 
 # Description 
 Weather Dashboard allows the user to search a city name, view the current <br>  
 weather conditions, and the future weather conditions in the next 5 days. <br> 
-The information displays the city name, the date, an icon representation <br> 
+The information displays the city name, the date, an icon representation  
 of weather conditions, the temperature, the humidity, the wind speed, and the UV index. <br> 
 
 # Requirements 
@@ -14,8 +14,9 @@ of weather conditions, the temperature, the humidity, the wind speed, and the UV
 3. When I view the UV index, then I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 4. When I view future weather conditions for that city, then I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
 5. When I click on a city in the search history, then I am again presented with current and future conditions for that city
-# Screenshots 
-
+# Screenshoot 
+<b> Website </b>
+![website](https://github.com/csbonang/bonang_weatherDashboard/blob/main/image_1.PNG)
 
 # References
 Side nav-bar <br> 
