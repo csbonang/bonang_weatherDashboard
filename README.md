@@ -1,5 +1,5 @@
 # bonang_weatherDashboard
-<b>Programmer: Clarisse Bonang </b>
+<b>Programmer: Clarisse Bonang </b> <br> 
 Deployed URL: https://csbonang.github.io/bonang_weatherDashboard/
 
 # Description 
