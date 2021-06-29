@@ -106,12 +106,12 @@ header{
 {
     border-radius: 1vw;
     margin-bottom: 2vw;
-    margin-left: 1vw;
+    margin-left: 2.5vw;
 }
 /* center the search header label  */
 #searchLabel 
 {
-    margin-left: 5vw;
+    margin-left: 6vw;
 }
 /* style submit button to blue and try to center it */
 #submitButton
