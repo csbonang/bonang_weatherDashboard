@@ -3,7 +3,7 @@
 Deployed URL: https://csbonang.github.io/bonang_weatherDashboard/
 
 # Description 
-Weather Dashboard allows the user to search a city name, view the current <br>  
+Weather Dashboard allows the user to search a city name, view the current   
 weather conditions, and the future weather conditions in the next 5 days. <br> 
 The information displays the city name, the date, an icon representation  
 of weather conditions, the temperature, the humidity, the wind speed, and the UV index. <br> 
